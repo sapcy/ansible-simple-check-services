@@ -1,0 +1,33 @@
+---
+- name: Kubernetes Master Nodes Check
+  hosts: k8s-master-nodes
+  gather_facts: no
+  roles:
+  - role: ./roles/k8s-master
+
+- name: Kubernetes Worker Nodes Check
+  hosts: k8s-worker-nodes
+  gather_facts: no
+  roles:
+  - role: ./roles/k8s-worker
+
+- name: MariaDB Master, Slave Check
+  hosts: mariadb-ha
+  gather_facts: no
+  become: true
+  roles:
+  - role: ./roles/mariadb
+
+- name: Maxscale Check
+  hosts: maxscale
+  gather_facts: no
+  become: true
+  roles:
+  - role: ./roles/maxscale
+
+- name: Harbor Check
+  hosts: harbor
+  gather_facts: no
+  become: true
+  roles:
+  - role: ./roles/harbor

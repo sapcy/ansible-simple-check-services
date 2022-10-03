@@ -1,0 +1,6 @@
+---
+harbor_port: 
+  - 5000
+harbor_process: 
+  - harbor
+container_ctl: /usr/bin/nerdctl

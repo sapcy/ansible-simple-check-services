@@ -1,0 +1,18 @@
+---
+kubernetes_ports:
+  - 10256 # Kube-proxy
+  - 10249 # Kube-proxy
+  - 10248 # Kubelet
+  - 10250 # Kubelet
+  - 179   # bird
+  - 9099  # calico-node
+
+kubernetes_process:
+  - kube-proxy
+  - kubelet
+  - calico-node
+  - bird
+
+kubernetes_services:
+  - containerd
+  - kubelet

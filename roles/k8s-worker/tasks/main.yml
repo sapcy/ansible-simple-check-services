@@ -1,0 +1,45 @@
+---
+- name: Port check
+  shell: /bin/netstat -tnlp | grep ":{{ item }} "
+  register: port_list
+  ignore_errors: true
+  with_items:
+  - "{{ kubernetes_ports }}"
+
+- name: Print ports
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  with_items:
+  - "{{ port_list.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: Process check
+  shell: ps aux | grep -v "grep" | grep {{ item }}
+  with_items:
+  - "{{ kubernetes_process }}"
+  register: ps_list
+  ignore_errors: true
+
+- name: Print process
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  with_items:
+  - "{{ ps_list.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: Service status check
+  shell: service {{ item }} status
+  with_items:
+  - "{{ kubernetes_services }}"
+  register: service_list
+  ignore_errors: true
+
+- name: Print services status
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  with_items:
+  - "{{ service_list.results }}"
+  loop_control:
+    label: "{{ item.item }}"

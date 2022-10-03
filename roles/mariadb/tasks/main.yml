@@ -1,0 +1,54 @@
+---
+- name: Port check
+  shell: /bin/netstat -tnlp | grep ":{{ item }} "
+  register: port_list
+  ignore_errors: true
+  with_items:
+  - "{{ mariadb_port }}"
+
+- name: Print ports
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  with_items:
+  - "{{ port_list.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: Process check
+  shell: ps aux | grep -v "grep" | grep {{ item }}
+  with_items:
+  - "{{ mariadb_process }}"
+  register: ps_list
+  ignore_errors: true
+
+- name: Print process
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  with_items:
+  - "{{ ps_list.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: Service status check
+  shell: systemctl status {{ item }}
+  with_items:
+  - "{{ mariadb_process }}"
+  register: service_list
+  ignore_errors: true
+
+- name: Print services status
+  debug:
+    msg: "{{ item.stdout_lines }}"
+  with_items:
+  - "{{ service_list.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+- name: Ping mysql
+  shell: "{{ mariadb_bin_path }}/mysqladmin ping --silent"
+  register: ping_result
+  ignore_errors: true
+
+- name: Print ping result
+  debug:
+    msg: "{{ ping_result.stdout_lines }}"

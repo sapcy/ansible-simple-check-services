@@ -1,0 +1,6 @@
+---
+mariadb_port: 
+  - 3306
+mariadb_process: 
+  - mysqld
+mariadb_bin_path: /usr/local/mysql/bin

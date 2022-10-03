@@ -1,0 +1,25 @@
+---
+kubernetes_ports:
+  - 10257 # Kube-controller-manager
+  - 10259 # Kube-scheduler
+  - 10249 # Kube-proxy
+  - 10248 # Kubelet
+  - 10250 # Kubelet
+  - 2379  # etcd
+  - 2380  # etcd
+  - 179   # bird
+  - 9099  # calico-node
+
+kubernetes_process:
+  - kube-controller-manager
+  - kube-scheduler
+  - kube-apiserver
+  - kube-proxy
+  - kubelet
+  - etcd
+  - calico-node
+  - bird
+
+kubernetes_services:
+  - containerd
+  - kubelet

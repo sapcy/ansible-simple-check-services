@@ -1,0 +1,9 @@
+---
+maxscale_port: 
+  - 13306
+  - 6603
+maxscale_process: 
+  - maxscale
+maxscale_service: 
+  - maxscale
+maxscale_bin_path: /usr/bin
